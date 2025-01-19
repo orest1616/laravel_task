@@ -37,6 +37,9 @@
             @endforeach
         </tbody>
     </table>
+<div class="mt-4">
+    {{ $employees->links() }}
+</div>
 @endsection
 
 @section('scripts')

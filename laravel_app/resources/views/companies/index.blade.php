@@ -9,43 +9,36 @@
         @endif
 
         <table id="companies-table" class="table table-striped">
-            <thead>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Logo</th>
+                <th>Website</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($companies as $company)
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Logo</th>
-                    <th>Website</th>
-                    <th>Actions</th>
+                    <td>{{ $company->id }}</td>
+                    <td>{{ $company->name }}</td>
+                    <td>{{ $company->email }}</td>
+                    <td>
+                        @if($company->logo)
+                            <img src="{{ asset('storage/' . $company->logo) }}" width="50" height="50">
+                        @else
+                            No logo
+                        @endif
+                    </td>
+                    <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($companies as $company)
-                    <tr>
-                        <td>{{ $company->id }}</td>
-                        <td>{{ $company->name }}</td>
-                        <td>{{ $company->email }}</td>
-                        <td>
-                            @if($company->logo)
-                                <img src="{{ asset('storage/' . $company->logo) }}" width="50" height="50">
-                            @else
-                                No logo
-                            @endif
-                        </td>
-                        <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
-                        <td>
-                            <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('companies.destroy', $company->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+            @endforeach
+        </tbody>
+    </table>
+    <div class="mt-4">
+        {{ $companies->links() }}
+    </div>
         <a href="{{ route('companies.create') }}" class="btn btn-primary mt-3">Create New Company</a>
     </div>
 @endsection
